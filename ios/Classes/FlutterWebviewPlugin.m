@@ -430,12 +430,11 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 //                    }
 
                     if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
-                        NSLog(@"Navigation link activated");
-                        if ([url.host containsString:_initialURL]) {
+                        if ([url.host isEqualToString:_initialURL]) {
                             NSLog(@"It's equal to host");
                             decisionHandler(WKNavigationActionPolicyAllow);
                         } else {
-                            NSLog(@"Opening an external");
+                            NSLog(@"%@", _initialURL);
                             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
                             decisionHandler(WKNavigationActionPolicyCancel);
                         }
