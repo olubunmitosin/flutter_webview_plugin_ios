@@ -393,7 +393,7 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
 decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
     BOOL isInvalid = [self checkInvalidUrl: navigationAction.request.URL];
-
+    NSURL *url = navigationAction.request.URL;
 
     id data = @{@"url": navigationAction.request.URL.absoluteString,
                 @"type": isInvalid ? @"abortLoad" : @"shouldStart",
@@ -420,29 +420,36 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
             if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
                 if (navigationAction.request.URL) {
                     NSLog(@"%@", navigationAction.request.URL.host);
-                    if (![navigationAction.request.URL.resourceSpecifier containsString:_initialURL] && _handleLinksExternally) {
-                        if ([[UIApplication sharedApplication] canOpenURL:navigationAction.request.URL]) {
-                            [[UIApplication sharedApplication] openURL:navigationAction.request.URL options:@{} completionHandler:^(BOOL success) {
-                                if (success) {
-                                    NSLog(@"URL opened successfully");
-                                } else {
-                                    NSLog(@"Failed to open URL");
-                                }
-                            }];
+//                    if (![navigationAction.request.URL.resourceSpecifier containsString:_initialURL] && _handleLinksExternally) {
+//                        if ([[UIApplication sharedApplication] canOpenURL:navigationAction.request.URL]) {
+//                            [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
+//                            decisionHandler(WKNavigationActionPolicyCancel);
+//                        }
+//                    } else {
+//                        decisionHandler(WKNavigationActionPolicyAllow);
+//                    }
+
+                    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+                        if ([url.host isEqualToString:_initialURL]) {
+                            decisionHandler(WKNavigationActionPolicyAllow);
+                        } else {
+                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
                             decisionHandler(WKNavigationActionPolicyCancel);
                         }
+
                     } else {
                         decisionHandler(WKNavigationActionPolicyAllow);
                     }
+
                 }
             } else {
                 decisionHandler(WKNavigationActionPolicyAllow);
             }
         }
-
     } else {
         decisionHandler(WKNavigationActionPolicyCancel);
     }
+
 
 }
 
