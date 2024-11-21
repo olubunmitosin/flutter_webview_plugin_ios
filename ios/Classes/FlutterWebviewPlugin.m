@@ -431,7 +431,7 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
                     if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
                         NSLog(@"Navigation link activated");
-                        if ([url.host isEqualToString:_initialURL]) {
+                        if ([url.host containsString:_initialURL]) {
                             NSLog(@"It's equal to host");
                             decisionHandler(WKNavigationActionPolicyAllow);
                         } else {
