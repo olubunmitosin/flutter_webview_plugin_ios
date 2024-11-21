@@ -446,14 +446,12 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 //                        decisionHandler(WKNavigationActionPolicyAllow);
 //                    }
 
-                    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
-                        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-                            decisionHandler(WKNavigationActionPolicyCancel);
-                        }
-                        else { decisionHandler(WKNavigationActionPolicyAllow); }
+                    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+                        decisionHandler(WKNavigationActionPolicyCancel);
+                    } else {
+                        decisionHandler(WKNavigationActionPolicyAllow);
                     }
-                    else { decisionHandler(WKNavigationActionPolicyAllow); }
 
                 }
             } else {
