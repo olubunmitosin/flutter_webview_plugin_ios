@@ -435,6 +435,7 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
                             decisionHandler(WKNavigationActionPolicyAllow);
                         } else {
                             NSLog(@"%@", _initialURL);
+                            NSLog(@"%@", url);
                             [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
                             decisionHandler(WKNavigationActionPolicyCancel);
                         }
