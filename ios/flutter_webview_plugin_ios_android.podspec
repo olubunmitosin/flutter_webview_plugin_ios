@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A new flutter plugin project.
                        DESC
-  s.homepage         = 'https://github.com/ec-siddhant/flutter_webview_plugin_ios'
+  s.homepage         = 'https://github.com/olubunmitosin/flutter_webview_plugin_ios'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
