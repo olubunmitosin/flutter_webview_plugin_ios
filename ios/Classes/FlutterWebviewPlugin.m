@@ -436,13 +436,7 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
             if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
                 if (navigationAction.request.URL) {
-                    NSLog(@"%@", _handleLinksExternally);
-                    if (_handleLinksExternally) {
-                        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-                        decisionHandler(WKNavigationActionPolicyCancel);
-                    } else {
-                        decisionHandler(WKNavigationActionPolicyAllow);
-                    }
+                    decisionHandler(WKNavigationActionPolicyAllow);
 //                    if (![navigationAction.request.URL.resourceSpecifier containsString:_initialURL] && _handleLinksExternally) {
 //                        NSLog(@"%@", navigationAction.request.URL.host);
 //                        if ([[UIApplication sharedApplication] canOpenURL:navigationAction.request.URL]) {
