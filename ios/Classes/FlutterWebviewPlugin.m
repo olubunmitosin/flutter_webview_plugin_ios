@@ -436,6 +436,7 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
             if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
                 if (navigationAction.request.URL) {
+                    NSLog(@"%@", _handleLinksExternally);
                     if (_handleLinksExternally) {
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
                         decisionHandler(WKNavigationActionPolicyCancel);
